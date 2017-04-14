@@ -1,0 +1,1 @@
+http://www.cnx-software.com/2015/09/26/how-to-use-orange-pi-camera-in-linux-with-motion/

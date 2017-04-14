@@ -1,0 +1,19 @@
+PHP: no keep-file-handle-open-between-pages
+http://stackoverflow.com/questions/23068135/php-keep-file-handle-open-between-pages
+
+Java8
+https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-get-on-debian-8
+
+
+Tomcat 8.5
+http://stackoverflow.com/questions/27617158/tomcat-7-with-java-8-on-raspberry-pi
+wget http://apache.panu.it/tomcat/tomcat-8/v8.5.13/bin/apache-tomcat-8.5.13.tar.gz
+http://stackoverflow.com/questions/36703856/access-tomcat-manager-app-from-different-host
+
+
+JAVA & Serial
+http://fazecast.github.io/jSerialComm/
+
+
+NO START X
+https://raspberrypi.stackexchange.com/questions/1318/boot-without-starting-x-server

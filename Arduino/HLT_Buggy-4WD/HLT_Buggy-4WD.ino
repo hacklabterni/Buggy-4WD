@@ -24,7 +24,9 @@ int pinSpeed_4 = 9;
 HLT_Motion motion;
 
 void setup() {
-  Serial.begin(57600);
+  Serial.begin(115200);
+  //Serial.begin(57600);
+  //Serial.begin(9600);
 
   motion.setPinMotor1(pinDirA_1, pinDirB_1, pinSpeed_1);
   motion.setPinMotor2(pinDirA_2, pinDirB_2, pinSpeed_2);
@@ -41,8 +43,8 @@ void loop() {
     Serial.println("command="+command);
     HLT_PointXY pointXY(command);
     if (!pointXY.isError()) {
-      Serial.println("x = " + String(pointXY.getX()));
-      Serial.println("y = " + String(pointXY.getY()));
+      //Serial.println("x = " + String(pointXY.getX()));
+      //Serial.println("y = " + String(pointXY.getY()));
   
       motion.moveBuggy(pointXY);
       if (motion.isError()) {

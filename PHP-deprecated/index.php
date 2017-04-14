@@ -56,11 +56,10 @@ $localIP = $_SERVER['HTTP_HOST'];
     });
 
    function sendPoint(x,y){
-     var msg = "Handler for .mousemove() called at ";
-         msg += x + ", " + y;
-     log.text(msg);
 
-	 var data = '{"x":'+x+',"y":'+y+'}';
+     var data = '{"x":'+Math.trunc(x)+',"y":'+Math.trunc(y)+'}'; 
+     var msg = "Handler for .mousemove() called at "+data;
+     log.text(msg);
 
 	 HLT_Buggy4WD.getUtils().sendCommand({
 							request: data,
