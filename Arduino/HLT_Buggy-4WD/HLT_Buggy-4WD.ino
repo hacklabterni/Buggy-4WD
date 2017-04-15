@@ -24,7 +24,8 @@ int pinSpeed_4 = 9;
 HLT_Motion motion;
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(250000);
+  //Serial.begin(115200);
   //Serial.begin(57600);
   //Serial.begin(9600);
 
@@ -33,7 +34,7 @@ void setup() {
   motion.setPinMotor3(pinDirA_3, pinDirB_3, pinSpeed_3);
   motion.setPinMotor4(pinDirA_4, pinDirB_4, pinSpeed_4);
   
-  Serial.setTimeout(100); //default 1000, imposto 100 per rendere più veloce la lettura del comando tramite: Serial.readString();
+  Serial.setTimeout(50); //default 1000, imposto 100 per rendere più veloce la lettura del comando tramite: Serial.readString();
 }
 
 void loop() {

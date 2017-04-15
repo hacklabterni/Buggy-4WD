@@ -20,8 +20,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fazecast.jSerialComm.SerialPort;
 import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
+
+import it.hacklabterni.buggyweb.utils.PointXY;
 
 import org.apache.log4j.Logger;
 
@@ -56,7 +59,8 @@ public class SendCommandServlet extends HttpServlet {
 		
 		comPort = SerialPort.getCommPort("/dev/ttyUSB0");
 		
-		comPort.setBaudRate(115200);
+//		comPort.setBaudRate(115200);
+		comPort.setBaudRate(250000);
 		comPort.setFlowControl(SerialPort.FLOW_CONTROL_DISABLED);
 		comPort.setParity(SerialPort.NO_PARITY);
 		comPort.setNumDataBits(8);
@@ -100,24 +104,32 @@ public class SendCommandServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		if (Duration.between(lastSend, Instant.now()).toMillis() < 100) {
-			log.info("too frequent delivery");	
-			return;
+		StringBuffer jb = new StringBuffer();
+		  String line = null;
+		  try {
+		    BufferedReader reader = request.getReader();
+		    while ((line = reader.readLine()) != null)
+		      jb.append(line);
+		  } catch (Exception e) { /*report an error*/ }
+		  
+		  log.info("json: " + jb.toString());
+		  
+		if (Duration.between(lastSend, Instant.now()).toMillis() < 50) {			
+			
+			ObjectMapper mapper = new ObjectMapper();
+			PointXY point = mapper.readValue(jb.toString(), PointXY.class);
+
+			if (point.getX() >= 0 && point.getY() >= 0){
+				log.info("too frequent delivery");
+				return;
+			}
+			else
+				log.info("continue for stop motors");
 		}
 		
 		synchronized(this) {
 			
 			lastSend = Instant.now();
-		
-			StringBuffer jb = new StringBuffer();
-			  String line = null;
-			  try {
-			    BufferedReader reader = request.getReader();
-			    while ((line = reader.readLine()) != null)
-			      jb.append(line);
-			  } catch (Exception e) { /*report an error*/ }
-			  
-			  log.info("json: " + jb.toString());		  
 			  
 			  try (OutputStream output = comPort.getOutputStream()) {
 		            // Wait for 100 ms
